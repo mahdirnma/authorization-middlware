@@ -84,4 +84,13 @@ class PostController extends Controller
         $post->update(['is_active'=>0]);
         return redirect()->route('posts.index');
     }
+
+    public function publish(Post $post)
+    {
+        if ($post->published)
+            $post->update(['published'=>0]);
+        else
+            $post->update(['published'=>1]);
+        return redirect()->route('posts.index');
+    }
 }
