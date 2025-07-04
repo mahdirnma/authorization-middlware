@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::middleware('writer')->group(function () {
         Route::get('writer/posts', [UserController::class, 'index'])->name('writer.posts');
+        Route::get('writer/posts/create', [UserController::class, 'create'])->name('writer.posts.create');
+        Route::post('writer/posts/store', [UserController::class, 'store'])->name('writer.posts.store');
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
