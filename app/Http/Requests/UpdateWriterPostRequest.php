@@ -11,7 +11,7 @@ class UpdateWriterPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateWriterPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|min:3',
+            'description' => 'required|min:3',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ];
     }
 }

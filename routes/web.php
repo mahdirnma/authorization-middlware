@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
         Route::get('writer/posts', [UserController::class, 'index'])->name('writer.posts');
         Route::get('writer/posts/create', [UserController::class, 'create'])->name('writer.posts.create');
         Route::post('writer/posts/store', [UserController::class, 'store'])->name('writer.posts.store');
+        Route::get('writer/posts/{post}/edit', [UserController::class, 'edit'])->name('writer.posts.edit');
+        Route::patch('writer/posts/{post}/update', [UserController::class, 'update'])->name('writer.posts.update');
+
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

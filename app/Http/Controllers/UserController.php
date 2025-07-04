@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWriterPostRequest;
+use App\Http\Requests\UpdateWriterPostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
@@ -34,6 +35,21 @@ class UserController extends Controller
             ]);
         if ($post) {
             $post->tags()->attach($request->tags);
+            return redirect()->route('writer.posts');
+        }
+        return redirect()->back();
+    }
+
+    public function edit(Post $post)
+    {
+        $categories=Category::where('is_active',1)->get();
+        $tags=Tag::where('is_active',1)->get();
+        return view('writer.edit',compact('post','categories','tags'));
+    }
+    public function update(UpdateWriterPostRequest $request, Post $post){
+        $status=$post->update($request->all());
+        if ($status) {
+            $post->tags()->sync($request->tags);
             return redirect()->route('writer.posts');
         }
         return redirect()->back();
