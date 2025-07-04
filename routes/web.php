@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
         Route::post('writer/posts/store', [UserController::class, 'store'])->name('writer.posts.store');
         Route::get('writer/posts/{post}/edit', [UserController::class, 'edit'])->name('writer.posts.edit');
         Route::patch('writer/posts/{post}/update', [UserController::class, 'update'])->name('writer.posts.update');
-
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -39,3 +38,4 @@ Route::middleware('guest')->group(function () {
     Route::get('/login',[AuthController::class,'loginForm'])->name('login.form');
     Route::post('/login',[AuthController::class,'login'])->name('login');
 });
+Route::get('/',[UserController::class,'userDashboard'])->name('home');

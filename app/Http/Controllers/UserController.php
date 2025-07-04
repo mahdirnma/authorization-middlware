@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function userDashboard()
+    {
+        $posts=Post::where('is_active',1)->where('is_active',1)->orderBy('created_at','desc')->paginate(2);
+        return view('user.index',compact('posts'));
+    }
     public function dashboard()
     {
         return view('admin.dashboard');
