@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
 
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/login',[AuthController::class,'loginForm'])->name('login.form');
 Route::post('/login',[AuthController::class,'login'])->name('login');
