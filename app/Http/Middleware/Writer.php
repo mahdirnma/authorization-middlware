@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Authorization
+class Writer
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,8 @@ class Authorization
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            if (Auth::user()->role==2){
-                return redirect()->route('writer.posts');
+            if (Auth::user()->role==1){
+                return redirect()->route('dashboard');
             }
             return $next($request);
         }

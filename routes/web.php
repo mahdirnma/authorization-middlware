@@ -18,13 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [UserController::class, 'dashboard'])->name('dashboard')/*->middleware('authorize')*/;
-    Route::resource('posts', PostController::class);
-    Route::patch('posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
-    Route::resource('categories', CategoryController::class);
-    Route::resource('tags', TagController::class);
-
+    Route::middleware('authorize')->group(function () {
+        Route::get('/admin', [UserController::class, 'dashboard'])->name('dashboard')->middleware('authorize');
+        Route::resource('posts', PostController::class);
+        Route::patch('posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
+        Route::resource('categories', CategoryController::class);
+        Route::resource('tags', TagController::class);
+    });
+    Route::middleware('writer')->group(function () {
+        Route::get('writer/posts', [UserController::class, 'index'])->name('writer.posts');
+    });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-Route::get('/login',[AuthController::class,'loginForm'])->name('login.form');
-Route::post('/login',[AuthController::class,'login'])->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login',[AuthController::class,'loginForm'])->name('login.form');
+    Route::post('/login',[AuthController::class,'login'])->name('login');
+});
