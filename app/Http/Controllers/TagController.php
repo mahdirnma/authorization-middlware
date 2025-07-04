@@ -22,6 +22,7 @@ class TagController extends Controller
      */
     public function create()
     {
+        return view('admin.tags.create');
     }
 
     /**
@@ -29,7 +30,11 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $tag= Tag::create($request->all());
+        if($tag){
+            return redirect()->route('tags.index');
+        }
+        return redirect()->back();
     }
 
     /**
